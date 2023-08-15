@@ -22,15 +22,13 @@ else:
 
 
 def generate_commit_message(diff):
-    messages = [
-        {"role": "system", "content": "Generate good commit messages based on git diff, output must not exceed 72 characters and must be only the message without additional text."},
-    ]
-    # Call OpenAI GPT-3 to generate a commit message based on the diff
-    prompt = f"Generate a commit message based on the following:\n{diff}"
+    messages = []
+    prompt = f"Can you write a commit messages with maximum 72 characters describing the following output:\n\n{diff}"
     messages.append({"role": "user", "content": prompt})
     data = {
         "model": "gpt-3.5-turbo",
         "messages": messages,
+        "temperature": 0.5,
     }
     response = requests.post(
         "https://api.openai.com/v1/chat/completions",
@@ -38,13 +36,20 @@ def generate_commit_message(diff):
         json=data,
     )
 
+    if response.status_code != 200:
+        print(response.text)
+        sys.exit(1)
+
     response = response.json()
-    return response.choices[0].message.content
+    print(response)
+    return response['choices'][0]['message']['content']
 
 def git_commit(*args):
     if args == ("commit",):
-        diff = subprocess.check_output(["git", "diff"]).decode("utf-8")
+        diff = subprocess.check_output(["git", "diff", "--staged"]).decode("utf-8")
         commit_message = generate_commit_message(diff)
+        print(commit_message)
+        exit()
         subprocess.run(["git", "commit", "-m", commit_message])
     else:
         subprocess.run(["git"] + list(args))
