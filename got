@@ -41,15 +41,13 @@ def generate_commit_message(diff):
         sys.exit(1)
 
     response = response.json()
-    print(response)
     return response['choices'][0]['message']['content']
 
 def git_commit(*args):
     if args == ("commit",):
         diff = subprocess.check_output(["git", "diff", "--staged"]).decode("utf-8")
         commit_message = generate_commit_message(diff)
-        print(commit_message)
-        exit()
+        commit_message = f'"{commit_message}"'
         subprocess.run(["git", "commit", "-m", commit_message])
     else:
         subprocess.run(["git"] + list(args))
