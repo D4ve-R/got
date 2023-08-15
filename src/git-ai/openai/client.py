@@ -1,14 +1,22 @@
 import openai
 openai.api_key = "sk-..."
 
-# list models
-models = openai.Model.list()
-
-# print the first model's id
-print(models.data[0].id)
+content = """
+        Don't answer anything that is not absolutely necessary.
+        A commit message has maximum 72 characters and is formatted as follows:
+        <type>: <subject>
+        Where type can be one of the following:
+        feat: a new feature
+        fix: a bug fix
+        docs: changes to documentation
+        style: formatting, missing semi colons, etc; no code change
+        refactor: refactoring production code
+        test: adding tests, refactoring test; no production code change
+        Write a commit message for the following output of git diff:
+    """
 
 messages = [
-    {"role": "user", "content": "Hello world"}
+    {"role": "user", "content": content},
 ]
 
 # create a chat completion
