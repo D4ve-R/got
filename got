@@ -47,6 +47,12 @@ def git_commit(*args):
     if args == ("commit",):
         diff = subprocess.check_output(["git", "diff", "--staged"]).decode("utf-8")
         commit_message = generate_commit_message(diff)
+
+        print(f"Generated commit message:\n\n{commit_message}")
+        # handle enter
+        if input("Commit? [Y/n] ").lower() == "n":
+            commit_message = input("Please enter commit message: ")
+        
         commit_message = f'"{commit_message}"'
         subprocess.run(["git", "commit", "-m", commit_message])
     else:
