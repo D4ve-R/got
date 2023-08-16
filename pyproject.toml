@@ -18,4 +18,4 @@ where = ["src"]
 include = ["got*"] 
 
 [project.scripts]
-got="got.__main__"
+got="got.cli:main"

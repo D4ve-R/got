@@ -3,12 +3,15 @@ import argparse
 import sys
 import os
 from transformers import pipeline
-from backend.client import Client
+from .client import Client
 
 class HfClient(Client):
-    def __init__(self, model="mamiksik/T5-commit-message-generation", token=None, device="cpu"):
+    def __init__(self, model="mamiksik/T5-commit-message-generation", device=None):
         super().__init__()
-        self.pipe = pipeline(model=model, device=device, token=token)
+        if not device:
+            import torch
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.pipe = pipeline(model=model, device=device)
 
     def __call__(self, data):
         return self._generate(data)

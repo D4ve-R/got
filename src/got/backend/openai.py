@@ -2,7 +2,7 @@
 import sys
 import os
 import requests
-from backend.client import Client
+from .client import Client
 
 class OpenAIClient(Client):
     def __init__(self, api_key="", model="gpt-3.5-turbo", temp=0.5):
@@ -31,7 +31,7 @@ class OpenAIClient(Client):
 
     def _generate_commit_message(self, diff):
         messages = []
-        prompt = f"Can you write a short commit messages with maximum 100 characters describing the following output:\n\n{diff}"
+        prompt = f"Write a commit message with maximum 100 characters describing the following output:\n\n{diff}"
         messages.append({"role": "user", "content": prompt})
         data = {
             "model": self.model,
