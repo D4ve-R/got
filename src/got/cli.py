@@ -40,6 +40,14 @@ def _generate_commit_message(diff, backend=None):
     _save_backend(backend)
     return client(diff)
 
+def sanitize_commit_message(message):
+    # remove quotes if they are the first and last character
+    if message[0] == '"':
+        message = message[1:]
+    if message[-1] == '"':
+        message = message[:-1]
+    return message
+
 def got(*args, backend=""):
     try:
         if args == ("commit",):
@@ -49,6 +57,7 @@ def got(*args, backend=""):
                 sys.exit(0)
 
             commit_message = _generate_commit_message(diff, backend=backend)
+            commit_message = sanitize_commit_message(commit_message)
 
             print(f"Generated commit message:\n\n{commit_message}")
             if input("Commit? [Y/n] ").lower() == "n":
