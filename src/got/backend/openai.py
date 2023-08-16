@@ -4,7 +4,7 @@ import os
 import requests
 from backend.client import Client
 
-class GptClient(Client):
+class OpenAIClient(Client):
     def __init__(self, api_key="", model="gpt-3.5-turbo", temp=0.5):
         super().__init__()
         self.api_key = api_key
@@ -31,7 +31,7 @@ class GptClient(Client):
 
     def _generate_commit_message(self, diff):
         messages = []
-        prompt = f"Can you write a commit messages with maximum 72 characters describing the following output:\n\n{diff}"
+        prompt = f"Can you write a short commit messages with maximum 150 characters describing the following output:\n\n{diff}"
         messages.append({"role": "user", "content": prompt})
         data = {
             "model": self.model,
@@ -53,6 +53,6 @@ class GptClient(Client):
 
 
 if __name__ == "__main__":
-    pipe = GptClient()
+    pipe = OpenAIClient()
     diff = sys.stdin.read() if len(sys.argv) == 1 else sys.argv[1:].join(' ')
     print(pipe(sys.stdin.read()))

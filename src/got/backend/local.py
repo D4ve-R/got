@@ -6,9 +6,9 @@ from transformers import pipeline
 from backend.client import Client
 
 class HfClient(Client):
-    def __init__(self, model="mamiksik/T5-commit-message-generation", device="cpu"):
+    def __init__(self, model="mamiksik/T5-commit-message-generation", token=None, device="cpu"):
         super().__init__()
-        self.pipe = pipeline(model=model, device=device)
+        self.pipe = pipeline(model=model, device=device, token=token)
 
     def __call__(self, data):
         return self._generate(data)
