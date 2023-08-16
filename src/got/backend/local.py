@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import sys
+import os
 from transformers import pipeline
 from backend.client import Client
 
@@ -13,6 +14,11 @@ class HfClient(Client):
         return self._generate(data)
     
     def _generate(self, data):
+        l = len(data)
+        if l > 512:
+            print(f"diff too long, {l} characters")
+            data = data[:512]
+        os.environ["TOKENIZERS_PARALLELISM"] = "false"
         return self.pipe(data)[0]['generated_text']
 
 if __name__ == "__main__":
@@ -27,9 +33,5 @@ if __name__ == "__main__":
                                                        
     if not sys.stdin.isatty() and not diff:
         diff = sys.stdin.read()
-        len = len(diff)
-        if len > 512:
-            print(f"diff too long, {len} characters")
-            diff = diff[:512]
 
     print(pipe(diff))
