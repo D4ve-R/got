@@ -1,0 +1,21 @@
+[project]
+name = "got"
+version = "0.0.1"
+description = "git, but with ai"
+readme = "README.md"
+dependencies =[
+    'requests',
+    'transformers',
+    'torch'
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["got*"] 
+
+[project.scripts]
+got="got.__main__"
