@@ -31,7 +31,7 @@ class OpenAIClient(Client):
 
     def _generate_commit_message(self, diff):
         messages = []
-        prompt = f"Can you write a short commit messages with maximum 150 characters describing the following output:\n\n{diff}"
+        prompt = f"Can you write a short commit messages with maximum 100 characters describing the following output:\n\n{diff}"
         messages.append({"role": "user", "content": prompt})
         data = {
             "model": self.model,
