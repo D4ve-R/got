@@ -2,7 +2,6 @@
 import sys
 import os
 import subprocess
-from .backend.local import HfClient
 
 def _save_backend(backend):
     try:
@@ -28,6 +27,8 @@ def _generate_commit_message(diff, backend=None):
 
     client = None
     if backend == "local" or backend == "hf":
+        # TODO imports are damn slow
+        from .backend.local import HfClient
         client = HfClient()
     elif backend == "openai":
         from .backend.openai import OpenAIClient
