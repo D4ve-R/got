@@ -37,16 +37,21 @@ pip install -e .
 
 You can add your own backend by implementing `got.backend.client`.
 
+## Todo
+- [ ] Train a better model
+- [ ] Add more models
+- [ ] Add more backends
+
+## Contributing
+
+Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue or submit a pull request.
+
 ## Experiments
 
 running hf model [mamiksik/T5-commit-message-generation](https://huggingface.co/mamiksik/T5-commit-message-generation) takes roughly 10 seconds on a 2019 macbook pro.
 Quality is not great, but it's a start.
 
 openai gpt-turbo-3.5 usage with 20 commits costs ~$0.02, depending on the length of the commit messages.
-
-## Contributing
-
-Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue or submit a pull request.
 
 ## License
 
