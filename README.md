@@ -41,6 +41,8 @@ You can add your own backend by implementing `got.backend.client`.
 - [ ] Train a better model
 - [ ] Add more models
 - [ ] Add more backends
+- [ ] Use in vscode?
+- [ ] Upload to pypi
 
 ## Contributing
 
